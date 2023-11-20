@@ -14,12 +14,14 @@ const artistsString = artists.join(", ");
 <a
     href={`/playlist/${id}`}
     class="playlist-item transition-all duration-300 flex flex-col relative p-2 gap-2 pb-6 overflow-hidden rounded-md hover:bg-zinc-800 shadow-lg hover:shadow-xl bg-zinc-500/30 w-44"
+    transition:name=`playlist ${id} box`
 >
     <picture class="aspect-square w-full h-auto flex-none">
         <img
             src={cover}
             alt={`Cover of ${title} by ${artistsString}`}
             class="object-cover w-full h-full rounded-md"
+            transition:name=`playlist ${id} image`
         />
     </picture>
 

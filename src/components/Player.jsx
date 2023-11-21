@@ -2,8 +2,9 @@ import { usePlayerSotre } from "@/store/playerStore";
 import { Slider } from "@/components/Slider";
 import { useEffect, useRef, useState } from "react";
 
-export const Play = () => (
+export const Play = ({ className }) => (
     <svg
+        className={className}
         role="img"
         width="16"
         height="16"
@@ -16,8 +17,9 @@ export const Play = () => (
     </svg>
 );
 
-export const Pause = () => (
+export const Pause = ({ className }) => (
     <svg
+        className={className}
         role="img"
         width="16"
         height="16"
@@ -81,7 +83,7 @@ const SongControl = ({ audio }) => {
 
     return (
         <div className="flex gap-x-3 text-xs pt-2">
-            <span className="opacity-50 w-12 text-right">{formatTime(currentTime)}</span>
+            <span className="opacity-50 w-12 text-right">{currentTime ? formatTime(currentTime) : "-:--"}</span>
 
             <Slider
                 defaultValue={[40]}

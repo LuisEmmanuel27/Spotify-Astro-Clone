@@ -3,15 +3,29 @@ import { Pause, Play } from "./Player"
 
 const CardPlayButton = ({ id }) => {
 
-    const { isPlaying, currentMusic, setCurrentSong, setIsPlaying } = usePlayerSotre(state => state);
+    const { isPlaying, currentMusic, setCurrentMusic, setIsPlaying } = usePlayerSotre(state => state);
+
+    const isPlayingPlaylist = isPlaying && currentMusic.playlist?.id === id;
 
     const handleClick = () => {
-        setIsPlaying(!isPlaying);
+        if (isPlayingPlaylist) {
+            setIsPlaying(false);
+            return;
+        }
+
+        fetch(`/api/get-info-playlist.json?id=${id}`)
+            .then(res => res.json())
+            .then(data => {
+                const { songs, playlist } = data;
+
+                setIsPlaying(true);
+                setCurrentMusic({ songs, playlist, song: songs[0] });
+            });
     }
 
     return (
         <button onClick={handleClick} className='card-play-button rounded-full bg-green-500 p-4 shadow-sm'>
-            {isPlaying ? <Pause /> : <Play />}
+            {isPlayingPlaylist ? <Pause /> : <Play />}
         </button>
     )
 }

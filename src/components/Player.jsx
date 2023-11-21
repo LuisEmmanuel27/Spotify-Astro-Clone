@@ -94,7 +94,7 @@ const SongControl = ({ audio }) => {
                 }}
             />
 
-            <span className="opacity-50 w-12">{duration ? formatTime(duration) : "0:00"}</span>
+            <span className="opacity-50 w-12">{duration ? formatTime(duration) : "-:--"}</span>
         </div>
     )
 }

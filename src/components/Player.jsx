@@ -1,5 +1,6 @@
 import { usePlayerSotre } from "@/store/playerStore";
-import { useEffect, useRef, useState } from "react";
+import { Slider } from "@/components/Slider";
+import { useEffect, useRef } from "react";
 
 export const Play = () => (
     <svg
@@ -52,6 +53,7 @@ const Player = () => {
 
     const { currentMusic, isPlaying, setIsPlaying } = usePlayerSotre(state => state);
     const audioRef = useRef();
+    const volumeRef = useRef(1);
 
     useEffect(() => {
         isPlaying ? audioRef.current.play() : audioRef.current.pause();
@@ -62,6 +64,7 @@ const Player = () => {
         if (song) {
             const src = `/music/${playlist?.id}/0${song.id}.mp3`;
             audioRef.current.src = src;
+            audioRef.current.volume = volumeRef.current;
             audioRef.current.play();
         }
     }, [currentMusic]);
@@ -84,7 +87,20 @@ const Player = () => {
                 </div>
             </div>
 
-            <div className="grid place-content-center">volumen</div>
+            <div className="grid place-content-center">
+                <Slider
+                    defaultValue={[40]}
+                    max={100}
+                    min={0}
+                    className="w-[95px]"
+                    onValueChange={(value) => {
+                        const [newValue] = value;
+                        const volumeValue = newValue / 100;
+                        volumeRef.current = volumeValue;
+                        audioRef.current.volume = volumeValue;
+                    }}
+                />
+            </div>
 
             <audio ref={audioRef} />
         </div>
